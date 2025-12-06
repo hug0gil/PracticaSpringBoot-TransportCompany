@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+
+        <div th:fragment="alertas">
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+
+        <h1>Lista de pedidos</h1>
+
+        <a th:href="@{/pedidos/nuevo}" class="btn btn-primary mb-3">Crear pedido</a>
+        <a th:href="@{/pedidos/buscar}" class="btn btn-primary mb-3">Buscar pedidos</a>
+        <a th:href="@{/pedidos/estadisticas}" class="btn btn-primary mb-3">Ver estadisticas</a>
+        <a th:href="@{/}" class="btn btn-secondary mb-3">Volver al menu</a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre del cliente</th>
+                    <th>Fecha de pedido</th>
+                    <th>Fecha de entrega</th>
+                    <th>Estado de pedido</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${pedido.idPedido}">ID</td>
+                    <td th:text="${pedido.cliente != null ? pedido.cliente.name : 'Sin cliente'}">Cliente</td>
+                    <td th:text="${pedido.fechaPedido}">Fecha pedido</td>
+                    <td th:text="${pedido.fechaEntrega}">Fecha entrega</td>
+                    <td th:text="${pedido.estadoPedido}">Estado</td>
+                    <td>
+                        <a th:href="@{/pedidos/info/{id}(id=${pedido.idPedido})}"
+                            class="btn btn-success btn-sm">Mostrar</a>
+                        <a th:href="@{/pedidos/editar/{id}(id=${pedido.idPedido})}"
+                            class="btn btn-secondary btn-sm">Modificar</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            th:data-bs-target="'#confirmDeletePedidoModal__' + ${pedido.idPedido}">
+                            Eliminar
+                        </button>
+
+
+
+
+                        <div class="modal fade" th:id="'confirmDeletePedidoModal__' + ${pedido.idPedido}" tabindex="-1"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirmar eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de eliminar el pedido <strong
+                                            th:text="${pedido.idPedido}"></strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/pedidos/eliminar/{id}(id=${pedido.idPedido})}"
+                                            class="btn btn-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+
+                <!-- Botón anterior -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link"
+                        th:href="@{/pedidos(page=${currentPage != null && currentPage > 0 ? currentPage - 1 : 0}, size=10)}">Anterior</a>
+                </li>
+
+                <!-- Números de página -->
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:text="${i + 1}" th:href="@{/pedidos(page=${i}, size=10)}"></a>
+                </li>
+
+                <!-- Botón siguiente -->
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link"
+                        th:href="@{/pedidos(page=${currentPage != null ? currentPage + 1 : 1}, size=10)}">Siguiente</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>Añadir nuevo pedido</h1>
+
+        <form th:action="@{/pedidos/crear}" th:object="${pedido}" method="post">
+
+            <!-- Cliente -->
+            <div class="mb-3">
+                <label for="cliente" class="form-label">Cliente</label>
+                <select name="clienteId" class="form-select" required>
+                    <option value="" disabled>-- Selecciona un cliente --</option>
+                    <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.name + ' (' + c.dni + ')'}"
+                        th:selected="${pedido.cliente != null} ? ${pedido.cliente.idCliente == c.idCliente} : false">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Fecha Pedido -->
+            <div class="mb-3">
+                <label for="fechaPedido" class="form-label">Fecha del pedido</label>
+                <input type="date" th:field="*{fechaPedido}" id="fechaPedido" class="form-control" required>
+            </div>
+
+            <!-- Fecha Entrega -->
+            <div class="mb-3">
+                <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
+                <input type="date" th:field="*{fechaEntrega}" id="fechaEntrega" class="form-control" required>
+            </div>
+
+            <!-- Estado -->
+            <div class="mb-3">
+                <label for="estadoPedido" class="form-label">Estado del Pedido</label>
+                <select th:field="*{estadoPedido}" id="estadoPedido" class="form-select" required>
+                    <option value="" disabled selected>Selecciona un estado</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En curso">En curso</option>
+                    <option value="Entregado">Entregado</option>
+                    <option value="Cancelado">Cancelado</option>
+                </select>
+            </div>
+
+            <!-- Rutas -->
+            <div class="mb-3">
+                <label for="rutas" class="form-label">Rutas Asignadas</label>
+                <select multiple th:field="*{rutas}" id="rutas" class="form-select" size="5">
+                    <option th:each="ruta : ${rutas}" th:value="${ruta.idRuta}"
+                        th:text="${ruta.origen + ' - ' + ruta.destino}" th:selected="${pedido.rutas.contains(ruta)}">
+                    </option>
+                </select>
+                <div class="form-text">Usa Ctrl (Windows) o Cmd (Mac) para seleccionar varias rutas.</div>
+            </div>
+
+            <!-- Botones -->
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success me-2">Guardar pedido</button>
+                <a th:href="@{/pedidos}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

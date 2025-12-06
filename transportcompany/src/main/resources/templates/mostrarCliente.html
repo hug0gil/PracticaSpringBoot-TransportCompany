@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Información cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>Datos del cliente</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>DNI</th>
+                    <th>Nombre completo</th>
+                    <th>Email</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${cliente.dni}"></td>
+                    <td th:text="${cliente.name}"></td>
+                    <td th:text="${cliente.email}"></td>
+                    <td th:text="${cliente.direccion}"></td>
+                    <td th:text="'+34 '+${cliente.telefono}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/clientes}" class="btn btn-secondary">Volver a lista de clientes</a>
+    </div>
+
+    <div class="container mt-5">
+        <h2>Pedidos del cliente</h2>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Fecha pedido</th>
+                    <th>Fecha entrega</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${pedido.idPedido}"></td>
+                    <td th:text="${pedido.fechaPedido}"></td>
+                    <td th:text="${pedido.fechaEntrega}"></td>
+                    <td th:text="${pedido.estadoPedido}"></td>
+                </tr>
+                <tr th:if="${pedidos.size()} == 0">
+                    <td colspan="4" class="text-center">No hay pedidos registrados para este cliente.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/pedidos}" class="btn btn-secondary me-2">Volver a lista de pedidos</a>
+        <a th:href="@{/pedidos/nuevo(clienteId=${cliente.idCliente})}" class="btn btn-primary">Añadir nuevo Pedido</a>
+
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
