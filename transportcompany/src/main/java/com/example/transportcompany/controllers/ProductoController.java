@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.transportcompany.models.Almacen;
 import com.example.transportcompany.models.Producto;
 import com.example.transportcompany.repositories.AlmacenRepository;
 import com.example.transportcompany.repositories.ProductoRepository;

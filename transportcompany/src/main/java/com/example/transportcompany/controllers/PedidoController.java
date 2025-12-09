@@ -64,7 +64,7 @@ public class PedidoController {
         Pedido pedido = new Pedido();
         if (clienteId != null) {
             Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
-            pedido.setCliente(cliente); // inicializamos el cliente seleccionado
+            pedido.setCliente(cliente); 
         }
         model.addAttribute("pedido", pedido);
         model.addAttribute("clientes", clienteRepository.findAll());

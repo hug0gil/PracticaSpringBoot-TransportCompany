@@ -87,7 +87,7 @@ public class ClienteController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String removePedido(@PathVariable Long id, RedirectAttributes redAttrib) {
+    public String removeCliente(@PathVariable Long id, RedirectAttributes redAttrib) {
         if (!clienteRepository.existsById(id))
             redAttrib.addFlashAttribute("error", "El cliente no existe");
         else {
