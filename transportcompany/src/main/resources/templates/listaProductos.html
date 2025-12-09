@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+
+        <h1>Lista de productos</h1>
+
+        <a th:href="@{/productos/nuevo}" class="btn btn-primary mb-3">Crear producto</a>
+        <a th:href="@{/}" class="btn btn-secondary mb-3">Volver al menú</a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Almacén</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="p : ${productos}">
+                    <td th:text="${p.nombre}"></td>
+                    <td th:text="${p.descripcion}"></td>
+                    <td th:text="${p.precioUnitario}"></td>
+                    <td th:text="${p.stock}"></td>
+                    <td th:text="${p.almacen != null ? p.almacen.nombre : 'Sin almacén'}"></td>
+
+                    <td>
+                        <a th:href="@{/productos/info/{id}(id=${p.idProducto})}"
+                            class="btn btn-success btn-sm">Mostrar</a>
+                        <a th:href="@{/productos/editar/{id}(id=${p.idProducto})}"
+                            class="btn btn-secondary btn-sm">Modificar</a>
+                        <a th:href="@{/productos/eliminar/{id}(id=${p.idProducto})}"
+                            class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

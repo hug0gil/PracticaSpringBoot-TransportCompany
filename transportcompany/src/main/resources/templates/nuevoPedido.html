@@ -19,8 +19,9 @@
                 <select name="clienteId" class="form-select" required>
                     <option value="" disabled>-- Selecciona un cliente --</option>
                     <option th:each="c : ${clientes}" th:value="${c.idCliente}" th:text="${c.name + ' (' + c.dni + ')'}"
-                        th:selected="${pedido.cliente != null} ? ${pedido.cliente.idCliente == c.idCliente} : false">
+                        th:selected="${pedido.cliente != null and pedido.cliente.idCliente == c.idCliente}">
                     </option>
+
                 </select>
             </div>
 

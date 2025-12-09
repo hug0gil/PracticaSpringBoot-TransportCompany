@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conductor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+        <h1 th:text="${conductor.idConductor != null ? 'Editar Conductor' : 'Nuevo Conductor'}"></h1>
+
+        <form th:action="@{${conductor.idConductor != null} ? '/conductores/modificar' : '/conductores/crear'}"
+            th:object="${conductor}" method="post">
+
+            <input type="hidden" th:field="*{idConductor}" />
+
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input th:field="*{nombre}" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Licencia</label>
+                <input th:field="*{licencia}" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Teléfono</label>
+                <input type="number" th:field="*{telefono}" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Dirección</label>
+                <input th:field="*{direccion}" class="form-control" required />
+            </div>
+
+            <button class="btn btn-success">Guardar</button>
+            <a th:href="@{/conductores}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+</body>
+
+</html>

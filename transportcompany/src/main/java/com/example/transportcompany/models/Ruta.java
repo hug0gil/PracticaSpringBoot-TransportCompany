@@ -28,4 +28,14 @@ public class Ruta {
     private String destino;
     private float distancia;
     private float tiempoEstimado;
+
+    @Override
+    public String toString() {
+        return "Ruta{idRuta=" + idRuta +
+                ", origen='" + origen + '\'' +
+                ", destino='" + destino + '\'' +
+                ", distancia=" + distancia +
+                ", tiempoEstimado=" + tiempoEstimado +
+                '}';
+    }
 }

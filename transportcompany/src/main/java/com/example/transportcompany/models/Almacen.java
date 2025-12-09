@@ -24,4 +24,10 @@ public class Almacen {
 
     @OneToMany(mappedBy = "almacen", cascade = CascadeType.ALL)
     private List<Producto> productos = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Almacen{id=" + idAlmacen + ", nombre='" + nombre + "'}";
+    }
+
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Transporte</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+        <h1 th:text="${transporte.idTransporte != null ? 'Editar Transporte' : 'Nuevo Transporte'}"></h1>
+
+        <form th:action="@{${transporte.idTransporte != null} ? '/transportes/modificar' : '/transportes/crear'}"
+            th:object="${transporte}" method="post">
+
+            <input type="hidden" th:field="*{idTransporte}" />
+
+            <div class="mb-3">
+                <label class="form-label">Tipo Transporte</label>
+                <input th:field="*{tipoTransporte}" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Capacidad</label>
+                <input type="number" th:field="*{capacidad}" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Estado</label>
+                <input th:field="*{estadoTransporte}" class="form-control" required />
+            </div>
+
+            <button class="btn btn-success">Guardar</button>
+            <a th:href="@{/transportes}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+</body>
+
+</html>

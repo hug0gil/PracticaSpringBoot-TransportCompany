@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mostrar Ruta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+
+        <h1>Ruta: <span th:text="${ruta.origen} + ' → ' + ${ruta.destino}"></span></h1>
+
+        <div class="mb-3">
+            <strong>Distancia:</strong> <span th:text="${ruta.distancia}"></span> km
+        </div>
+
+        <div class="mb-3">
+            <strong>Tiempo estimado:</strong> <span th:text="${ruta.tiempoEstimado}"></span> horas
+        </div>
+
+        <h3>Pedidos asociados</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Dirección</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${pedido.idPedido}"></td>
+                    <td th:text="${pedido.cliente.name}"></td>
+                    <td th:text="${pedido.cliente.direccion}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/rutas}" class="btn btn-secondary">Volver al listado</a>
+        <a th:href="@{/rutas/editar/{id}(id=${ruta.idRuta})}" class="btn btn-primary">Editar ruta</a>
+        <a th:href="@{/rutas/eliminar/{id}(id=${ruta.idRuta})}" class="btn btn-danger">Eliminar ruta</a>
+
+    </div>
+
+</body>
+
+</html>

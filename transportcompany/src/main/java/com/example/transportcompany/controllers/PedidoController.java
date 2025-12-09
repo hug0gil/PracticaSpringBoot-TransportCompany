@@ -60,13 +60,15 @@ public class PedidoController {
     }
 
     @GetMapping("/nuevo")
-    public String newPedido(@RequestParam(value = "clienteId", required = false) Long clienteId, Model model) {
+    public String nuevoPedido(@RequestParam(required = false) Long clienteId, Model model) {
         Pedido pedido = new Pedido();
-
+        if (clienteId != null) {
+            Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
+            pedido.setCliente(cliente); // inicializamos el cliente seleccionado
+        }
         model.addAttribute("pedido", pedido);
         model.addAttribute("clientes", clienteRepository.findAll());
         model.addAttribute("rutas", rutaRepository.findAll());
-        pedido.setRutas(rutaRepository.findAll());
         return "nuevoPedido";
     }
 
@@ -168,8 +170,8 @@ public class PedidoController {
 
         List<Pedido> resultados = pedidoRepository.buscarPorClienteYEstado(clienteNombre, estado);
         model.addAttribute("pedidos", resultados);
-        model.addAttribute("currentPage", 0); 
-        model.addAttribute("totalPages", 1); 
+        model.addAttribute("currentPage", 0);
+        model.addAttribute("totalPages", 1);
         model.addAttribute("totalItems", resultados.size());
         return "listaPedidos";
     }

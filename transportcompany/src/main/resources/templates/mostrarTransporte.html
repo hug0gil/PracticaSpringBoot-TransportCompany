@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mostrar Transporte</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+        <h1>Transporte: <span th:text="${transporte.tipoTransporte}"></span></h1>
+
+        <p><strong>Capacidad:</strong> <span th:text="${transporte.capacidad}"></span></p>
+        <p><strong>Estado:</strong> <span th:text="${transporte.estadoTransporte}"></span></p>
+
+        <h3>Vehículos asignados</h3>
+        <ul>
+            <li th:each="v : ${transporte.vehiculos}" th:text="${v.matricula} + ' - ' + ${v.modelo}"></li>
+        </ul>
+
+        <a th:href="@{/transportes}" class="btn btn-secondary">Volver al listado</a>
+        <a th:href="@{/transportes/editar/{id}(id=${transporte.idTransporte})}" class="btn btn-primary">Editar</a>
+        <a th:href="@{/transportes/eliminar/{id}(id=${transporte.idTransporte})}" class="btn btn-danger">Eliminar</a>
+    </div>
+
+</body>
+
+</html>

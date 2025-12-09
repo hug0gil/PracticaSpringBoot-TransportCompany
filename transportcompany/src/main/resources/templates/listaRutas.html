@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de rutas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container mt-4">
+
+        <h1>Lista de rutas</h1>
+
+        <a th:href="@{/rutas/nuevo}" class="btn btn-primary mb-3">Crear ruta</a>
+        <a th:href="@{/}" class="btn btn-secondary mb-3">Volver al menú</a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Distancia</th>
+                    <th>Tiempo estimado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="ruta : ${rutas}">
+                    <td th:text="${ruta.origen}"></td>
+                    <td th:text="${ruta.destino}"></td>
+                    <td th:text="${ruta.distancia}"></td>
+                    <td th:text="${ruta.tiempoEstimado}"></td>
+                    <td>
+                        <a th:href="@{/rutas/info/{id}(id=${ruta.idRuta})}" class="btn btn-success btn-sm">Mostrar</a>
+                        <a th:href="@{/rutas/editar/{id}(id=${ruta.idRuta})}"
+                            class="btn btn-secondary btn-sm">Modificar</a>
+                        <a th:href="@{/rutas/eliminar/{id}(id=${ruta.idRuta})}"
+                            class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

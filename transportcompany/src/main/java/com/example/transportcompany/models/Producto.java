@@ -23,4 +23,10 @@ public class Producto {
     @ManyToOne(optional = true)
     @JoinColumn(name = "idAlmacen", nullable = true)
     private Almacen almacen;
+
+    @Override
+    public String toString() {
+        return "Producto{id=" + idProducto + ", nombre='" + nombre + "'}";
+    }
+
 }
